@@ -1,0 +1,195 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "## 클래스와 함수"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 45,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Rectangle:\n",
+    "    count = 0 #클래스 변수 (해당 클래스 모두에게 공용으로 사용)\n",
+    "    \n",
+    "    def __init__(self, width, height): #초기자 initializer\n",
+    "        self.width = width #인스턴스 변수 self.*\n",
+    "        self.height = height #인스턴스 변수 self.*\n",
+    "        Rectangle.count += 1\n",
+    "        \n",
+    "    def calcArea(self): #인스턴스 메서드 (self 값을 받는다) \n",
+    "        area = self.width * self.height\n",
+    "        return area\n",
+    "    \n",
+    "    def isSquare(rectWidth, rectHeight): #정적 메서드 (독립적으로 작용)\n",
+    "        return rectWidth == rectHeight\n",
+    "        \n",
+    "    def printCount(cls): #클래스 메서드 (cls 클래스 파라미터 전달 받음)\n",
+    "        print(cls.count)\n",
+    "\n",
+    "    def __add__ (self, other) : #두 개의 객체를 더하는 __add__ 메서드 \n",
+    "        obj = Rectangle(self.width + other.width, self.height + other.height)\n",
+    "        return obj "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 55,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "area =  6\n",
+      "9\n",
+      "2\n"
+     ]
+    }
+   ],
+   "source": [
+    "rect = Rectangle(2,3)\n",
+    "area = rect.calcArea() \n",
+    "print('area = ', area)\n",
+    "\n",
+    "rect.count #클래스 변수 불러오기\n",
+    "rect.width #인스턴스 변수 불러오기 \n",
+    "\n",
+    "print(rect.count)\n",
+    "print(rect.width)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 56,
+   "metadata": {},
+   "outputs": [
+    {
+     "ename": "TypeError",
+     "evalue": "calcArea() takes 1 positional argument but 2 were given",
+     "output_type": "error",
+     "traceback": [
+      "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+      "\u001b[0;31mTypeError\u001b[0m                                 Traceback (most recent call last)",
+      "\u001b[0;32m<ipython-input-56-362db4fd8f99>\u001b[0m in \u001b[0;36m<module>\u001b[0;34m()\u001b[0m\n\u001b[1;32m      1\u001b[0m \u001b[0;31m#이렇게 하면 작동하지 않는다\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m      2\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m----> 3\u001b[0;31m \u001b[0mrect1\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mRectangle\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mcalcArea\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;36m4\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;36m3\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m      4\u001b[0m \u001b[0mprint\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mrect1\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+      "\u001b[0;31mTypeError\u001b[0m: calcArea() takes 1 positional argument but 2 were given"
+     ]
+    }
+   ],
+   "source": [
+    "#이렇게 하면 작동하지 않는다! Rectangle 만들고 함수 실행해야함!\n",
+    "\n",
+    "rect1 = Rectangle.calcArea(4,3)\n",
+    "print(rect1)\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 67,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "square =  True\n",
+      "26\n",
+      "PrintCount =  None\n",
+      "r3 =  <__main__.Rectangle object at 0x10e151fd0>\n",
+      "r3.calcArea() = 32\n"
+     ]
+    }
+   ],
+   "source": [
+    "square = Rectangle.isSquare(5,5) #정적 메서드는 변수 넣어줘야 함\n",
+    "print('square = ', square)\n",
+    "\n",
+    "rect2 = Rectangle(2,5) \n",
+    "pc = rect2.printCount() # cls 클래스 파라미터 전달받아서 출력 \n",
+    "print('PrintCount = ', pc)\n",
+    "\n",
+    "r3 = rect + rect2 # add 매서드로 새로운 r3 생성 \n",
+    "print('r3 = ', r3)\n",
+    "print('r3.calcArea() =', r3.calcArea())\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 75,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "class Animal :\n",
+    "    def __init__ (self, name):\n",
+    "        self.name = name\n",
+    "    def move (self):\n",
+    "        print(\"move\")\n",
+    "    def speak(self):\n",
+    "        print(\"야호\")\n",
+    "\n",
+    "class Dog (Animal): #부모 클래스의 이름을 넣어주면 상속 완료!\n",
+    "    def speak(self):\n",
+    "        print(\"bark\")\n",
+    "\n",
+    "class Duck (Animal) :\n",
+    "    def speak(self):\n",
+    "        print(\"quack\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 76,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "doggy\n",
+      "move\n",
+      "bark\n"
+     ]
+    }
+   ],
+   "source": [
+    "dog = Dog('doggy') #부모 클래스의 생성자 \n",
+    "name = dog.name # 부모 클래스의 인스턴스 변수\n",
+    "print(name)\n",
+    "dog.move() #부모 클래스의 메서드\n",
+    "dog.speak() #파생 클래스의 메서드 (부모 클래스보다 우선) "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
